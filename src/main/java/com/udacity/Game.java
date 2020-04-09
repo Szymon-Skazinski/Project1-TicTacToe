@@ -1,5 +1,6 @@
 package com.udacity;
 
+import javax.swing.*;
 import java.util.Arrays;
 
 /**
@@ -148,29 +149,48 @@ public class Game {
      * @param grid 2D array of characters representing the game board
      * @return String indicating the outcome of the game: "X wins" or "O wins" or "Tie" or "None"
      */
-    public String checkGameWinner(char [][]grid){
+    public String checkGameWinner(char [][]grid) {
         String result = "None";
         char player = 0;
+        boolean isWinner = false;
+        boolean isTie ;
 
-        for (int j = 0; j <= 2; j++) {
+        for (int j = 0; j <= 2 && isWinner != true; j++) {
             if (grid[0][j] != '-' && grid[0][j] == grid[1][j] && grid[1][j] == grid[2][j]) {        // checking for horizontal win
                 player = Character.toUpperCase(grid[0][j]);
                 result = player + " wins";
+                isWinner = true;
                 break;
-            } else if (grid[j][0] != '-' && grid[j][0] == grid[j][1] && grid[j][1] == grid[j][2] ) { // checking for vertical win
+            } else if (grid[j][0] != '-' && grid[j][0] == grid[j][1] && grid[j][1] == grid[j][2]) { // checking for vertical win
                 player = Character.toUpperCase(grid[j][0]);
                 result = player + " wins";
+                isWinner = true;
                 break;
             } else if (grid[0][0] != '-' && grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]) {    // checking for first diagonal win
                 player = Character.toUpperCase(grid[0][0]);
                 result = player + " wins";
+                isWinner = true;
                 break;
             } else if (grid[2][0] != '-' && grid[2][0] == grid[1][1] && grid[1][1] == grid[0][2]) {    // checking for second diagonal win
                 player = Character.toUpperCase(grid[2][0]);
                 result = player + " wins";
+                isWinner = true;
                 break;
             }
         }
+
+        isTie = true;
+
+        for (int i = 0; i <= 2; i++) {                      // checking for tie
+            for (int j = 0; j <= 2; j++) {
+                if (grid[i][j] == '-') isTie = false;
+            }
+        }
+
+        if (isTie == true && isWinner == false) {
+            result = "Tie";
+        }
+
         return result;
     }
     /**
